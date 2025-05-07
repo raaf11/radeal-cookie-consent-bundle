@@ -34,14 +34,8 @@ class CHCookieConsentTwigExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @var CookieChecker
-     */
-    private $cookieChecker;
-
-    public function __construct(CookieChecker $cookieChecker)
+    public function __construct(private CookieChecker $cookieChecker)
     {
-        $this->cookieChecker = $cookieChecker;
     }
 
     /**

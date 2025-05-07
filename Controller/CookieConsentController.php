@@ -22,71 +22,15 @@ use Twig\Environment;
 
 class CookieConsentController
 {
-    /**
-     * @var Environment
-     */
-    private $twigEnvironment;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var CookieChecker
-     */
-    private $cookieChecker;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var string
-     */
-    private $cookieConsentTheme;
-
-    /**
-     * @var string
-     */
-    private $cookieConsentPosition;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var bool
-     */
-    private $cookieConsentSimplified;
-
-    /**
-     * @var string|null
-     */
-    private $formAction;
-
     public function __construct(
-        Environment $twigEnvironment,
-        FormFactoryInterface $formFactory,
-        CookieChecker $cookieChecker,
-        RouterInterface $router,
-        string $cookieConsentTheme,
-        string $cookieConsentPosition,
-        TranslatorInterface $translator,
-        bool $cookieConsentSimplified = false,
-        string $formAction = null
-    ) {
-        $this->twigEnvironment         = $twigEnvironment;
-        $this->formFactory             = $formFactory;
-        $this->cookieChecker           = $cookieChecker;
-        $this->router                  = $router;
-        $this->cookieConsentTheme      = $cookieConsentTheme;
-        $this->cookieConsentPosition   = $cookieConsentPosition;
-        $this->translator              = $translator;
-        $this->cookieConsentSimplified = $cookieConsentSimplified;
-        $this->formAction              = $formAction;
+        private Environment          $twigEnvironment,
+        private FormFactoryInterface $formFactory,
+        private CookieChecker        $cookieChecker,
+        private RouterInterface      $router,
+        private TranslatorInterface  $translator,
+        private ?string              $formAction = null
+    )
+    {
     }
 
     /**
@@ -99,10 +43,7 @@ class CookieConsentController
 
         $response = new Response(
             $this->twigEnvironment->render('@CHCookieConsent/cookie_consent.html.twig', [
-                'form'       => $this->createCookieConsentForm()->createView(),
-                'theme'      => $this->cookieConsentTheme,
-                'position'   => $this->cookieConsentPosition,
-                'simplified' => $this->cookieConsentSimplified,
+                'form' => $this->createCookieConsentForm()->createView()
             ])
         );
 

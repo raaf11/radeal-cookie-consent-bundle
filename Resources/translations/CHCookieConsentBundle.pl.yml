@@ -1,0 +1,26 @@
+ch_cookie_consent:
+    title: 'Strona używa ciasteczek 🍪'
+    intro: 'Aby zapewnić bezpieczny i funkcjonalny serwis, używamy identyfikatorów z Twojego urządzenia oraz możemy zapisywać lub odczytywać pliki cookies. 
+    Za Twoją zgodą będziemy przetwarzać dane osobowe, dane demograficzne do analizy ruchu oraz dane o wydajności serwisu, aby zwiększyć zadowolenie użytkowników – określane dalej jako Twoje dane. 
+    Kliknięcie „Przejdź do serwisu” oznacza zgodę na szerokie przetwarzanie Twoich danych, w tym udostępnianie ich stronom trzecim, których listę znajdziesz w Polityce prywatości. 
+    Wybierając „Modyfikuj”, możesz dostosować ustawienia. Ustawienia możesz zmienić w dowolnym momencie.'
+    read_more: 'Polityka prywatności'
+    analytics:
+        title: 'Zezwól na ciasteczka analityczne.'
+        description: 'Anonimowe dane o zachowaniu użytkowników w celu analizy i poprawy jej działania.'
+    tracking:
+        title: 'Zezwól na ciasteczka śledzące.'
+        description: ''
+    marketing:
+        title: 'Zezwól na ciasteczka marketingowe.'
+        description: ''
+    social_media:
+        title: 'Zezwól na ciasteczka mediów społecznościowych.'
+        description: ''
+    no: 'Nie'
+    yes: 'Tak'
+    save: 'Zapisz ustawienia'
+    use_only_functional_cookies: 'Zezwól na wymagane ciasteczka funkcjonalne'
+    use_all_cookies: 'Zezwól na wszystkie ciasteczka'
+    show_details: 'Pokaż szczegóły'
+    hide_details: 'Ukryj szczegóły'

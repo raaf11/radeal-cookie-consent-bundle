@@ -17,14 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CookieHandler
 {
-    /**
-     * @var bool
-     */
-    private $httpOnly;
 
-    public function __construct(bool $httpOnly)
+    public function __construct(private bool $httpOnly)
     {
-        $this->httpOnly = $httpOnly;
     }
 
     /**

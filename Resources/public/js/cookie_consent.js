@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     var cookieConsent = document.querySelector('.ch-cookie-consent');
-    var cookieConsentForm = document.querySelector('.ch-cookie-consent__form');
+    var cookieConsentSimple = document.querySelector('.ch-cookie-consent__form-simple');
+    var cookieConsentGroup = document.querySelector('.ch-cookie-consent__form-group');
     var cookieConsentFormBtn = document.querySelectorAll('.ch-cookie-consent__btn');
-    var cookieConsentCategoryDetails = document.querySelector('.ch-cookie-consent__category-group');
-    var cookieConsentCategoryDetailsToggle = document.querySelector('.ch-cookie-consent__toggle-details');
+    var btnEnter = document.querySelector('.ch-cookie-consent__btn-enter');
+    var btnSelect = document.querySelector('.ch-cookie-consent__btn-select');
 
     // If cookie consent is direct child of body, assume it should be placed on top of the site pushing down the rest of the website
     if (cookieConsent && cookieConsent.parentNode.nodeName === 'BODY') {
@@ -22,45 +23,57 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    if (cookieConsentForm) {
+    if (cookieConsentGroup) {
+        // display custom form
+        btnSelect.addEventListener('click', function (event) {
+            event.preventDefault();
+            cookieConsentGroup.classList.add('show');
+            this.style.display = 'none';
+        }, false);
+
+        btnEnter.addEventListener('click', function (event) {
+            event.preventDefault();
+            // zaznacz wszstkie jako zaakceptowane
+            cookieConsentGroup.querySelectorAll('input[type="radio"][value="true"]').forEach(function (radio) {
+                radio.checked = true;
+            });
+            sendForm(event);
+        }, false);
+
         // Submit form via ajax
         for (var i = 0; i < cookieConsentFormBtn.length; i++) {
             var btn = cookieConsentFormBtn[i];
             btn.addEventListener('click', function (event) {
                 event.preventDefault();
-
-                var formAction = cookieConsentForm.action ? cookieConsentForm.action : location.href;
-                var xhr = new XMLHttpRequest();
-
-                xhr.onload = function () {
-                    if (xhr.status >= 200 && xhr.status < 300) {
-                        cookieConsent.style.display = 'none';
-                        var buttonEvent = new CustomEvent('cookie-consent-form-submit-successful', {
-                            detail: event.target
-                        });
-                        document.dispatchEvent(buttonEvent);
-                    }
-                };
-                xhr.open('POST', formAction);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.send(serializeForm(cookieConsentForm, event.target));
-
-                // Clear all styles from body to prevent the white margin at the end of the page
-                document.body.style.marginBottom = null;
-                document.body.style.marginTop  = null;
+                sendForm(event);
             }, false);
         }
     }
-
-    if (cookieConsentCategoryDetails && cookieConsentCategoryDetailsToggle) {
-        cookieConsentCategoryDetailsToggle.addEventListener('click', function() {
-            var detailsIsHidden = cookieConsentCategoryDetails.style.display !== 'block';
-            cookieConsentCategoryDetails.style.display = detailsIsHidden ? 'block' : 'none';
-            cookieConsentCategoryDetailsToggle.querySelector('.ch-cookie-consent__toggle-details-hide').style.display = detailsIsHidden ? 'block' : 'none';
-            cookieConsentCategoryDetailsToggle.querySelector('.ch-cookie-consent__toggle-details-show').style.display = detailsIsHidden ? 'none' : 'block';
-        });
-    }
 });
+
+function sendForm(event) {
+    var cookieConsent = document.querySelector('.ch-cookie-consent');
+    var cookieConsentForm = document.querySelector('.ch-cookie-consent__form');
+    var formAction = cookieConsentForm.action ? cookieConsentForm.action : location.href;
+    var xhr = new XMLHttpRequest();
+
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            cookieConsent.style.display = 'none';
+            var buttonEvent = new CustomEvent('cookie-consent-form-submit-successful', {
+                detail: event.target
+            });
+            document.dispatchEvent(buttonEvent);
+        }
+    };
+    xhr.open('POST', formAction);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(serializeForm(cookieConsentForm, event.target));
+
+    // Clear all styles from body to prevent the white margin at the end of the page
+    document.body.style.marginBottom = null;
+    document.body.style.marginTop = null;
+}
 
 function serializeForm(form, clickedButton) {
     var serialized = [];
@@ -78,7 +91,7 @@ function serializeForm(form, clickedButton) {
     return serialized.join('&');
 }
 
-if ( typeof window.CustomEvent !== "function" ) {
+if (typeof window.CustomEvent !== "function") {
     function CustomEvent(event, params) {
         params = params || {bubbles: false, cancelable: false, detail: undefined};
         var evt = document.createEvent('CustomEvent');

@@ -26,32 +26,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class CookieConsentFormSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var CookieLogger
-     */
-    private $cookieLogger;
-
-    /**
-     * @var CookieHandler
-     */
-    private $cookieHandler;
-
-    /**
-     * @var bool
-     */
-    private $useLogger;
-
-    public function __construct(FormFactoryInterface $formFactory, CookieLogger $cookieLogger, CookieHandler $cookieHandler, bool $useLogger)
+    public function __construct(
+        private FormFactoryInterface $formFactory,
+        private CookieLogger $cookieLogger,
+        private CookieHandler $cookieHandler,
+        private bool $useLogger)
     {
-        $this->formFactory   = $formFactory;
-        $this->cookieLogger  = $cookieLogger;
-        $this->cookieHandler = $cookieHandler;
-        $this->useLogger     = $useLogger;
     }
 
     public static function getSubscribedEvents(): array

@@ -16,20 +16,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CookieLogger
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    public function __construct(ManagerRegistry $registry, RequestStack $requestStack)
+    public function __construct(
+        ManagerRegistry      $registry,
+        private RequestStack $requestStack)
     {
-        $this->entityManager      = $registry->getManagerForClass(CookieConsentLog::class);
-        $this->requestStack       = $requestStack;
+        $this->entityManager = $registry->getManagerForClass(CookieConsentLog::class);
     }
 
     /**
@@ -73,6 +66,6 @@ class CookieLogger
 
         $lastDot = strrpos($ip, '.') + 1;
 
-        return substr($ip, 0, $lastDot).str_repeat('x', strlen($ip) - $lastDot);
+        return substr($ip, 0, $lastDot) . str_repeat('x', strlen($ip) - $lastDot);
     }
 }
